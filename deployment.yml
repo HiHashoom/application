@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: application
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: application
+  template:
+    metadata:
+      labels:
+        app: application
+    spec:
+      containers:
+        - image: $REPO_ECR:latest
+          imagePullPolicy: Always
+          name: application
+          ports:
+            - containerPort: 8080
